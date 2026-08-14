@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>raccoohh — Valorant Live Overlay</title>
+  <!-- GSAP via CDN. The browser source in OBS has internet access, so this
+       resolves fine; if you ever need fully-offline operation, download
+       gsap.min.js next to this file and change the src. -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <link rel="stylesheet" href="overlay.css" />
+</head>
+<body>
+  <!-- ============================================================
+       SESSION STATS BAR (top-left, persistent during the stream)
+       ============================================================ -->
+  <div id="stats-bar" class="panel hidden">
+    <div class="stat">
+      <span class="stat-label">K / D / A</span>
+      <span class="stat-value" id="stat-kda">0 / 0 / 0</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">FB : FD</span>
+      <span class="stat-value accent" id="stat-entry">0 : 0</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Clutches</span>
+      <span class="stat-value" id="stat-clutches">0</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Aces</span>
+      <span class="stat-value" id="stat-aces">0</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Impact</span>
+      <span class="stat-value accent" id="stat-impact">0.0</span>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       ALERT STAGE (center-top). Only ONE alert is ever visible —
+       the event queue guarantees sequential playback.
+       ============================================================ -->
+  <div id="alert-stage">
+    <div id="alert-card" class="hidden">
+      <div id="alert-title"></div>
+      <div id="alert-subtitle"></div>
+    </div>
+  </div>
+
+  <!-- Tiny connection indicator — useful while setting up in OBS,
+       effectively invisible on stream (6px dot, bottom-right). -->
+  <div id="conn-dot" class="disconnected" title="overlay connection"></div>
+
+  <script src="overlay.js"></script>
+</body>
+</html>

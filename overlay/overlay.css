@@ -1,0 +1,151 @@
+/* ============================================================
+   ABSOLUTE TRANSPARENCY — non-negotiable for OBS.
+   html, body and every structural wrapper must stay transparent.
+   Only leaf elements (panels, cards, text) may carry a background,
+   and even those use semi-translucent fills so gameplay shows through.
+   ============================================================ */
+html,
+body {
+  background: transparent !important;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  /* Prevent OBS from ever showing a selection/caret artifact */
+  user-select: none;
+  cursor: default;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* ---------- Session stats bar ---------- */
+#stats-bar {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  gap: 18px;
+  padding: 10px 18px;
+  /* Translucent, not opaque — gameplay stays visible behind it */
+  background: rgba(15, 25, 35, 0.55);
+  border: 1px solid rgba(255, 70, 85, 0.6);
+  border-radius: 6px;
+  backdrop-filter: blur(2px);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 64px;
+}
+
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-value.accent {
+  color: #ff4655; /* Valorant red */
+}
+
+/* ---------- Alert card ---------- */
+#alert-stage {
+  position: absolute;
+  top: 12vh;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none; /* never eats clicks if OBS source is interactive */
+  background: transparent;
+}
+
+#alert-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 48px;
+  background: rgba(15, 25, 35, 0.65);
+  border: 2px solid #ff4655;
+  border-radius: 8px;
+  box-shadow: 0 0 40px rgba(255, 70, 85, 0.45);
+  text-align: center;
+}
+
+#alert-title {
+  font-size: 44px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+#alert-subtitle {
+  margin-top: 4px;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Per-event accent themes — applied by JS via class */
+#alert-card.theme-ace {
+  border-color: #ff4655;
+  box-shadow: 0 0 60px rgba(255, 70, 85, 0.7);
+}
+#alert-card.theme-ace #alert-title {
+  color: #ff4655;
+}
+
+#alert-card.theme-clutch {
+  border-color: #b366ff;
+  box-shadow: 0 0 60px rgba(179, 102, 255, 0.6);
+}
+#alert-card.theme-clutch #alert-title {
+  color: #b366ff;
+}
+
+#alert-card.theme-match {
+  border-color: #00c8c8;
+  box-shadow: 0 0 40px rgba(0, 200, 200, 0.4);
+}
+#alert-card.theme-match #alert-title {
+  color: #00c8c8;
+  font-size: 30px;
+}
+
+/* ---------- Connection dot ---------- */
+#conn-dot {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  opacity: 0.4;
+}
+#conn-dot.connected {
+  background: #3ddc84;
+}
+#conn-dot.disconnected {
+  background: #ff4655;
+}
