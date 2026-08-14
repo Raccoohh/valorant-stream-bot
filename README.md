@@ -300,4 +300,4 @@ Every value is an environment variable (or `.env` entry); all are read by `app/c
 
 ---
 
-*Built for raccoohh and no talent. See you on Ascent.* 🦝
+*Built for raccoohh.* 🦝
