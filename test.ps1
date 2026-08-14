@@ -1,0 +1,1 @@
+docker compose exec -e VALORANT_NAME=raccoohh -e VALORANT_TAG=EUW app pytest
