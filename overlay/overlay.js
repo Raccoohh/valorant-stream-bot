@@ -114,7 +114,7 @@ function playEvent(event) {
         "ACE!",
         `${event.payload?.map || ""} ${event.payload?.agent ? "· " + event.payload.agent : ""}`.trim(),
         "theme-ace",
-        3.2
+        3.2,
       );
     case "clutch":
       sessionStats.clutches += event.payload?.count || 1;
@@ -123,7 +123,7 @@ function playEvent(event) {
         "CLUTCH OR KICK",
         `${event.payload?.situation || "1vX"} on ${event.payload?.map || "?"}`,
         "theme-clutch",
-        3.0
+        3.0,
       );
     case "new_match":
       applyMatchToStats(event.payload || {});
@@ -163,8 +163,8 @@ function playAlert(title, subtitle, themeClass, holdSeconds) {
     const tl = gsap.timeline({ onComplete: resolve });
     tl.fromTo(
       els.alertCard,
-      { scale: 0.3, opacity: 0, y: -40 },
-      { scale: 1, opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.8)" }
+      { scale: 0.3, opacity: 0, y: -40, visibility: "visible" },
+      { scale: 1, opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.8)" },
     )
       .to(els.alertCard, {
         scale: 1.05,
@@ -193,11 +193,16 @@ function playMatchSummary(p) {
     const tl = gsap.timeline({ onComplete: resolve });
     tl.fromTo(
       els.alertCard,
-      { x: "-110vw", opacity: 0 },
-      { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }
+      { x: "-110vw", opacity: 0, visibility: "visible" },
+      { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
     )
       .to({}, { duration: 2.6 })
-      .to(els.alertCard, { x: "110vw", opacity: 0, duration: 0.5, ease: "power3.in" })
+      .to(els.alertCard, {
+        x: "110vw",
+        opacity: 0,
+        duration: 0.5,
+        ease: "power3.in",
+      })
       .set(els.alertCard, { visibility: "hidden", x: 0 });
   });
 }
@@ -208,7 +213,13 @@ function revealStatsBar() {
     gsap.fromTo(
       els.statsBar,
       { opacity: 0, y: -20 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", onComplete: resolve }
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        onComplete: resolve,
+      },
     );
   });
 }
@@ -244,7 +255,10 @@ let reconnectAttempts = 0;
 let socket = null;
 
 function backoffDelayMs() {
-  const exp = Math.min(RECONNECT_BASE_MS * 2 ** reconnectAttempts, RECONNECT_MAX_MS);
+  const exp = Math.min(
+    RECONNECT_BASE_MS * 2 ** reconnectAttempts,
+    RECONNECT_MAX_MS,
+  );
   const jitter = exp * 0.2 * (Math.random() * 2 - 1); // ±20%
   return Math.round(exp + jitter);
 }
